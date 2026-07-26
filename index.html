@@ -119,6 +119,35 @@
       line-height: 1.6;
     }
 
+    /* Live Discord Stats Counter */
+    .discord-stats {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px 22px;
+      border-radius: 30px;
+      margin-bottom: 25px;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    .online-indicator {
+      width: 12px;
+      height: 12px;
+      background-color: #23a55a;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #23a55a;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(35, 165, 90, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(35, 165, 90, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(35, 165, 90, 0); }
+    }
+
     .join-btn {
       display: inline-flex;
       align-items: center;
@@ -205,7 +234,6 @@
   <div class="container">
     <!-- Header -->
     <header>
-      <!-- מקום ללוגו - יש לשים את קובץ התמונה באותה תיקייה בשם logo.png -->
       <img src="logo.png" alt="ISRAEL DZN Logo" class="logo-img">
       <p class="tagline">קהילת הגיימינג והעיצוב המובילה</p>
     </header>
@@ -216,6 +244,14 @@
       <p class="hero-description">
         השרת הרשמי למעצבים, גיימרים ויוצרי תוכן. אצלנו תמצאו קהילה תומכת, טורנירים, עזרה מקצועית, ואווירה ייחודית במינה.
       </p>
+
+      <!-- קופסת סטטיסטיקת מחוברים בלייב -->
+      <div class="discord-stats">
+        <span class="online-indicator"></span>
+        <span id="discord-online-count">טוען נתונים...</span> מחוברים כעת בשרת
+      </div>
+      <br>
+
       <a href="https://discord.gg/b7G8HXhymA" target="_blank" class="join-btn">
         <i class="fa-brands fa-discord"></i> להצטרפות לשרת הדיסקורד
       </a>
@@ -248,6 +284,26 @@
   <footer>
     &copy; 2026 ISRAEL DZN. כל הזכויות שמורות.
   </footer>
+
+  <!-- סקריפט למשיכת נתוני הדיסקורד בלייב -->
+  <script>
+    // ה-Server ID של השרת שלך מתוך הקישור
+    const serverInviteCode = 'b7G8HXhymA';
+
+    fetch(`https://discord.com/api/v9/invites/${serverInviteCode}?with_counts=true`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.approximate_presence_count !== undefined) {
+          document.getElementById('discord-online-count').innerText = data.approximate_presence_count.toLocaleString();
+        } else {
+          document.getElementById('discord-online-count').innerText = 'חברים';
+        }
+      })
+      .catch(error => {
+        console.error('Error loading Discord stats:', error);
+        document.getElementById('discord-online-count').innerText = 'חברים';
+      });
+  </script>
 
 </body>
 </html>
