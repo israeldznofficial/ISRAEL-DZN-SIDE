@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISRAEL DZN | הקהילה הרשמית</title>
+  <!-- Google Fonts: Rubik for modern Hebrew typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0b2545 0%, #134074 50%, #00b4d8 100%);
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.18);
+      --accent-teal: #52b788;
+      --accent-blue: #0077b6;
+      --accent-light-blue: #90e0ef;
+      --text-main: #ffffff;
+      --text-muted: #d8f3dc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient background glow elements */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(82, 183, 136, 0.25) 0%, rgba(0,0,0,0) 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      padding: 20px;
+      z-index: 1;
+    }
+
+    /* Header & Logo */
+    header {
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+    }
+
+    .logo-img {
+      max-width: 380px;
+      width: 90%;
+      height: auto;
+      filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.35));
+      transition: transform 0.3s ease;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.03);
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-top: 15px;
+      font-weight: 400;
+    }
+
+    /* Main Hero Banner / Action Area */
+    .hero-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      margin-bottom: 50px;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #90e0ef, #74c69d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: #e0f2fe;
+      max-width: 650px;
+      margin: 0 auto 30px auto;
+      line-height: 1.6;
+    }
+
+    /* Live Discord Stats Counter */
+    .discord-stats {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px 22px;
+      border-radius: 30px;
+      margin-bottom: 25px;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    .online-indicator {
+      width: 12px;
+      height: 12px;
+      background-color: #23a55a;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #23a55a;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(35, 165, 90, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(35, 165, 90, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(35, 165, 90, 0); }
+    }
+
+    .join-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--accent-teal), #2d6a4f);
+      color: #ffffff;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 16px 42px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(82, 183, 136, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .join-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(82, 183, 136, 0.6);
+      background: linear-gradient(135deg, #74c69d, #40916c);
+    }
+
+    /* Features Grid */
+    .section-title {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 30px;
+      color: var(--accent-light-blue);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-teal);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--accent-teal);
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .feature-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(11, 37, 69, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <img src="logo.png" alt="ISRAEL DZN Logo" class="logo-img">
+      <p class="tagline">קהילת הגיימינג והעיצוב המובילה</p>
+    </header>
+
+    <!-- Hero Card -->
+    <main class="hero-card">
+      <h1 class="hero-title">ברוכים הבאים לשרת ISRAEL DZN</h1>
+      <p class="hero-description">
+        השרת הרשמי למעצבים, גיימרים ויוצרי תוכן. אצלנו תמצאו קהילה תומכת, טורנירים, עזרה מקצועית, ואווירה ייחודית במינה.
+      </p>
+
+      <!-- קופסת סטטיסטיקת מחוברים בלייב -->
+      <div class="discord-stats">
+        <span class="online-indicator"></span>
+        <span id="discord-online-count">טוען נתונים...</span> מחוברים כעת בשרת
+      </div>
+      <br>
+
+      <a href="https://discord.gg/b7G8HXhymA" target="_blank" class="join-btn">
+        <i class="fa-brands fa-discord"></i> להצטרפות לשרת הדיסקורד
+      </a>
+    </main>
+
+    <!-- Features Section -->
+    <h2 class="section-title">מה מחכה לכם אצלנו?</h2>
+    <section class="features-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-gamepad feature-icon"></i>
+        <h3 class="feature-title">קהילת גיימינג</h3>
+        <p class="feature-text">חדרי דיבור פעילים, מציאת שותפים למשחק ואירועים קהילתיים שוטפים.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-paintbrush feature-icon"></i>
+        <h3 class="feature-title">עיצוב ויצירה</h3>
+        <p class="feature-text">פינות שיתוף עבודות, משוב ממעצבים מנוסים ומשאבים ייחודיים ליוצרים.</p>
+      </div>
+
+      <div class="feature-card">
+        <i class="fa-solid fa-headset feature-icon"></i>
+        <h3 class="feature-title">תמיכה וצוות זמין</h3>
+        <p class="feature-text">צוות ניהול מקצועי המעניק מענה מהיר ומערכת טיקטים מסודרת לכל פנייה.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 ISRAEL DZN. כל הזכויות שמורות.
+  </footer>
+
+  <!-- סקריפט למשיכת נתוני הדיסקורד בלייב -->
+  <script>
+    // ה-Server ID של השרת שלך מתוך הקישור
+    const serverInviteCode = 'b7G8HXhymA';
+
+    fetch(`https://discord.com/api/v9/invites/${serverInviteCode}?with_counts=true`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.approximate_presence_count !== undefined) {
+          document.getElementById('discord-online-count').innerText = data.approximate_presence_count.toLocaleString();
+        } else {
+          document.getElementById('discord-online-count').innerText = 'חברים';
+        }
+      })
+      .catch(error => {
+        console.error('Error loading Discord stats:', error);
+        document.getElementById('discord-online-count').innerText = 'חברים';
+      });
+  </script>
+
+</body>
+</html>
