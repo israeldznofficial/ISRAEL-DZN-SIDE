@@ -57,6 +57,46 @@
       pointer-events: none;
     }
 
+    /* Navigation Bar */
+    .navbar {
+      width: 100%;
+      background: rgba(11, 37, 69, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 15px 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--accent-light-blue);
+      border: 1px solid var(--card-border);
+    }
+
     .container {
       width: 100%;
       max-width: 1100px;
@@ -67,7 +107,7 @@
     /* Header & Logo */
     header {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 30px;
       margin-bottom: 30px;
     }
 
@@ -232,6 +272,14 @@
 </head>
 <body>
 
+  <!-- תפריט ניווט עליון -->
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i> בית</a></li>
+      <li><a href="designs.html"><i class="fa-solid fa-palette"></i> עיצובים</a></li>
+    </ul>
+  </nav>
+
   <div class="container">
     <!-- Header -->
     <header>
@@ -288,7 +336,6 @@
 
   <!-- סקריפט למשיכת נתוני הדיסקורד בלייב -->
   <script>
-    // ה-Server ID של השרת שלך מתוך הקישור
     const serverInviteCode = 'b7G8HXhymA';
 
     fetch(`https://discord.com/api/v9/invites/${serverInviteCode}?with_counts=true`)
