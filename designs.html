@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>גלריית עיצובים | ISRAEL DZN</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <!-- Google Fonts: Rubik -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0b2545 0%, #134074 50%, #00b4d8 100%);
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.18);
+      --accent-teal: #52b788;
+      --accent-light-blue: #90e0ef;
+      --text-main: #ffffff;
+      --text-muted: #d8f3dc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient background glow elements */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(82, 183, 136, 0.25) 0%, rgba(0,0,0,0) 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      width: 100%;
+      background: rgba(11, 37, 69, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 15px 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--accent-light-blue);
+      border: 1px solid var(--card-border);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      padding: 40px 20px;
+      z-index: 1;
+    }
+
+    /* Header Section */
+    .header-section {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #90e0ef, #74c69d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .design-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .design-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-teal);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .design-img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: rgba(0, 0, 0, 0.25);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .design-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .design-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent-light-blue);
+    }
+
+    .design-author {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Lightbox Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content-wrapper {
+      position: relative;
+      max-width: 90%;
+      max-height: 85vh;
+      text-align: center;
+    }
+
+    .modal-img {
+      max-width: 100%;
+      max-height: 75vh;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      object-fit: contain;
+    }
+
+    .modal-caption {
+      margin-top: 15px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent-light-blue);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -45px;
+      left: 0;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .close-btn:hover {
+      color: var(--accent-teal);
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(11, 37, 69, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- תפריט ניווט עליון -->
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="index.html"><i class="fa-solid fa-house"></i> בית</a></li>
+      <li><a href="designs.html" class="active"><i class="fa-solid fa-palette"></i> עיצובים</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="header-section">
+      <h1 class="header-title">גלריית העיצובים</h1>
+      <p class="header-subtitle">לחץ על עיצוב כדי להציגו בגודל מלא</p>
+    </div>
+
+    <!-- גריד העיצובים שמתמלא אוטומטית -->
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <!-- Modal למצב תמונה מוגדלת -->
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <div class="modal-content-wrapper" onclick="event.stopPropagation()">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeModal()"></i>
+      <img id="modalImg" class="modal-img" src="" alt="תמונה מוגדלת">
+      <div id="modalCaption" class="modal-caption"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 ISRAEL DZN. כל הזכויות שמורות.
+  </footer>
+
+  <script>
+    // ==========================================
+    // 🎨 כאן מוסיפים/מעדכנים את העיצובים שלך!
+    // ==========================================
+    const myDesigns = [
+      { title: "עיצוב 1", file: "design1.png", author: "IMRI@" },
+      { title: "עיצוב 2", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 3", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 4", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 5", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 6", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 7", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 8", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 9", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 10", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 11", file: "logo.png", author: "ISRAEL DZN" },
+      { title: "עיצוב 12", file: "logo.png", author: "ISRAEL DZN" }
+    ];
+
+    // פונקציה שמייצרת את הכרטיסיות מתוך הרשימה למעלה
+    function renderGallery() {
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = '';
+
+      myDesigns.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'design-card';
+        card.onclick = () => openModal(item.file, item.title);
+
+        card.innerHTML = `
+          <img src="${item.file}" alt="${item.title}" class="design-img">
+          <div class="design-info">
+            <h3 class="design-title">${item.title}</h3>
+            <p class="design-author"><i class="fa-solid fa-user"></i> מעצב: ${item.author}</p>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    // פונקציות להגדלת תמונה
+    function openModal(imageSrc, titleText) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalCaption = document.getElementById('modalCaption');
+
+      modalImg.src = imageSrc;
+      modalCaption.innerText = titleText;
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.remove('show');
+    }
+
+    // הפעלת הגלריה בעת טעינת הדף
+    renderGallery();
+  </script>
+
+</body>
+</html>
